@@ -6,9 +6,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import './genInfo.css';
 
 // Import Slice Dependencies
-
+import 
 
 // Build Component
-export function GenInfo() {
-    
+function GenInfo() {
+    return (
+        <h1> Weather Information </h1>
+    )
 }
+
+export default GenInfo;

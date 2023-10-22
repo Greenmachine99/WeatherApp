@@ -1,18 +1,37 @@
 // Import Dependencies
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+// Import Backend API Dependencies
+import { fetchWeatherInfo } from '../../util/sensorAPI';
 
 // Declare Initial State
 const initialState = {
     // Declare State Variables
-    temperature: null,
-    humidity: null,
-    rain: null,
+    temperature: 0,
+    humidity: 0,
+    rain: 0,
     status: 'idle',
 }
 
-// Fetch Backend Data
+// Build Async Thunks
+export const fetchWeatherInfo = createAsyncThunk(
+    'genInfo/fetchWeatherInfo',
+    async () => {
+        // Declare Async Thunk Logic
+        const response = await fetchWeatherInfo();
+        return response.data;
+    }
+);
 
 // Build Slice
+export const genInfoSlice = createSlice({
+    name: 'genInfo',
+    initialState,
+    reducers: {
+        // Declare Reducers
+
+    },
+})
 
 // Export Slice Actions
 
