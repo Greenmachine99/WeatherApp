@@ -8,10 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import './tempInfo.css';
 
 // Build Component
-function TempInfo() {
+export function TempInfo() {
     return (
         <h1> Temperature </h1>
     )
 }
-
-export default TempInfo;

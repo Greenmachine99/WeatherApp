@@ -8,10 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import './rainInfo.css';
 
 // Build Component
-function RainInfo() {
+export function RainInfo() {
     return (
         <h1> Rain </h1>
     )
 }
-
-export default RainInfo;

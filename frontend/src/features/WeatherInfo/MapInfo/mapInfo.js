@@ -8,10 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import './mapInfo.css';
 
 // Build Component
-function MapInfo() {
+export function MapInfo() {
     return (
         <h1> Map </h1>
     )
 }
-
-export default MapInfo;

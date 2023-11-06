@@ -8,10 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import './humInfo.css';
 
 // Build Component
-function HumInfo() {
+export function HumInfo() {
     return (
         <h1> Humidity </h1>
     )
 }
-
-export default HumInfo;
