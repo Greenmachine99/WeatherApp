@@ -17,7 +17,7 @@ export function GenInfo() {
 
     return (
         <div className = 'weather-header'>
-            <h1> Weather App </h1>
+            <h1> Current Weather Info </h1>
             <h1> {temperature}°C  </h1>
             <h1> {humidity}% </h1>
             <h1> {precipitation}mm </h1>
