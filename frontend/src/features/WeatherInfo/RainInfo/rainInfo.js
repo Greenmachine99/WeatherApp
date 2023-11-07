@@ -10,6 +10,8 @@ import './rainInfo.css';
 // Build Component
 export function RainInfo() {
     return (
-        <h1> Rain </h1>
+        <div className = 'rain-info'>
+            <h1> Precipitation </h1>
+        </div>
     )
 }

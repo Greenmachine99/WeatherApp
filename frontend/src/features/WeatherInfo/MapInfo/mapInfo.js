@@ -10,6 +10,8 @@ import './mapInfo.css';
 // Build Component
 export function MapInfo() {
     return (
-        <h1> Map </h1>
+        <div className = 'map-container'>
+            <h1> Map </h1>
+        </div>
     )
 }

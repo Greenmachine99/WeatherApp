@@ -10,6 +10,8 @@ import './humInfo.css';
 // Build Component
 export function HumInfo() {
     return (
-        <h1> Humidity </h1>
+        <div className = 'hum-info'>
+            <h1> Humidity </h1>
+        </div>
     )
 }

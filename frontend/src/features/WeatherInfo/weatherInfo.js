@@ -14,24 +14,22 @@ import { MapInfo } from './MapInfo/mapInfo.js';
 import './weatherInfo.css';
 
 // Build Component
-function WeatherInfo() {
+export function WeatherInfo() {
     return (
         <div className = 'weather-window'>
-            <h1> Weather Information </h1>
+            <div className = 'header'>
+                <h1> Weather Information </h1>
+            </div>
             <div className = 'weather-info'>
-                <div className = 'big'>
+                <div className = 'big-container'>
                     <MapInfo />
                 </div>
-                <div className = 'small containers'>
-                    <div className = 'small'>
+                <div className = 'small-containers'>
                         <TempInfo />
                         <RainInfo />
                         <HumInfo />
-                    </div>
                 </div>
             </div>
         </div>
     )
 }
-
-export default WeatherInfo;

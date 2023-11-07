@@ -10,6 +10,8 @@ import './tempInfo.css';
 // Build Component
 export function TempInfo() {
     return (
-        <h1> Temperature </h1>
+        <div className = 'temp-info'>    
+            <h1> Temperature </h1>
+        </div>    
     )
 }
