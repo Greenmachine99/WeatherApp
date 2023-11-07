@@ -1,17 +1,56 @@
-// Import Dependencies
-import React, { useState } from 'react';
+// Import React & Redux Dependencies
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+// Import Leaflet Dependencies
+import { MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+import { Icon } from "leaflet";
+import 'leaflet/dist/leaflet.css';
 
 // Import Slice Dependencies
+import { getUserPosition, startPositionSelector} from "./mapInfoSlice";
 
 // Import CSS Module
 import './mapInfo.css';
 
 // Build Component
 export function MapInfo() {
+const dispatch = useDispatch();
+
+// Assign Redux State to Variables
+const startPosition = useSelector(startPositionSelector);
+const hasError = useSelector((state) => state.map.hasError);
+const isLoading = useSelector((state) => state.map.isLoading);
+
+// Set Icon for Marker
+const positionIcon = new Icon({
+    iconUrl: "https://img.icons8.com/emoji/48/000000/round-pushpin-emoji.png",
+    iconSize: [40, 40]
+})
+
+// Load Current Location
+useEffect(() => {
+    dispatch(getUserPosition());
+},
+[dispatch])
+
     return (
-        <div className = 'map-container'>
-            <h1> Map </h1>
-        </div>
+        <div className="map-container">
+        {isLoading ? (
+            <p> Loading current location... </p>
+        ) : (!hasError ? (
+        <MapContainer center={startPosition} zoom={13} >
+            <TileLayer 
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <Marker position={startPosition} icon={positionIcon}>
+                <Popup>
+                    You are here!
+                </Popup>
+            </Marker>               
+        </MapContainer>
+        ) :
+        <p> Cannot load current location </p>
+        )}
+    </div>
     )
 }
