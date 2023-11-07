@@ -21,7 +21,6 @@ export function GenInfo() {
             <h1> {temperature}°C  </h1>
             <h1> {humidity}% </h1>
             <h1> {precipitation}mm </h1>
-        </div>
-        
+        </div> 
     )
 }
