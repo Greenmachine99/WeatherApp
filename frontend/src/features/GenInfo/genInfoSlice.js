@@ -20,6 +20,7 @@ const initialState = {
     tempFeelslike: 0,
     windSpeed: 0,
     cloudiness: 0,
+    rain: 0,
 
     isLoading: false,
     hasError: false
@@ -47,6 +48,7 @@ const options = {
             state.tempFeelslike = action.payload.main.feels_like;
             state.windSpeed =  action.payload.wind.speed;
             state.cloudiness = action.payload.clouds.all;
+            state.rain = action.payload.rain['1h'];
         })
         .addCase(loadWeather.rejected, state => {
             state.isLoading = false;
@@ -64,6 +66,7 @@ export const tempSelector = state => state.weather.temp;
 export const tempFeelslikeSelector = state => state.weather.tempFeelslike;
 export const windSpeedSelector = state => state.weather.windSpeed;
 export const cloudinessSelector = state => state.weather.cloudiness;
+export const rainSelector = state => state.weather.rain;
 
 export const isLoadingSelector = state => state.weather.isLoading;
 export const hasErrorSelector = state => state.weather.hasError;
