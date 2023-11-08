@@ -20,7 +20,9 @@ export function GenInfo() {
     const temperature = useSelector(tempSelector);
     const temperatureFeelsLike = useSelector(tempFeelslikeSelector);
     const precipitation = useSelector(rainSelector);
+    // const rainType = typeof precipitation;
     const windSpeed = useSelector(windSpeedSelector);
+    const cloudiness = useSelector(cloudinessSelector);
 
     const [lat, lon] = useSelector(startPositionSelector);
 
@@ -32,9 +34,26 @@ export function GenInfo() {
     return (
         <div className = 'weather-header'>
             <h1> Current Weather Info </h1>
-            <h1> {temperature}°C  </h1>
-            <h1> {temperatureFeelsLike}°C </h1>
-            <h1> {precipitation}mm </h1>
+            <div className = 'info'> 
+                <h1> Temperature </h1>
+                <h2> {temperature}°C  </h2>
+            </div>
+            <div className = 'info'> 
+                <h1> Windspeed </h1>
+                <h2> {windSpeed} m/s </h2>
+            </div>
+            <div className = 'info'> 
+                <h1> Cloudiness </h1>
+                <h2> {cloudiness}% </h2>
+            </div>
+            <div className = 'info'> 
+                <h1> Feels Like </h1>
+                <h2> {temperatureFeelsLike}°C  </h2>
+            </div>
+            <div className = 'info'>
+                <h1> Precipitation</h1>
+                {typeof precipitation == Number ? (<h2> mm </h2>) : (<h2> {precipitation} </h2>)}
+            </div>
         </div> 
     )
 }
