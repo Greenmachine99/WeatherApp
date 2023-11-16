@@ -16,14 +16,16 @@ db = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True)
 # Creating API
 api = Api(app)
 
+### GPS API ###
+# Columns: id, lat, lon
+
 # Create Parser
-parser = reqparse.RequestParser()
-
+parserGPS = reqparse.RequestParser()
 # Add GPS Arguments to Parser
-parser.add_argument('lat', type=float)
-parser.add_argument('lng', type=float)
+parserGPS.add_argument('lat', type=float)
+parserGPS.add_argument('lng', type=float)
 
-# GPS API
+# Create GPS API
 class gps(Resource):
     # GET Method
     def get(self):
@@ -35,12 +37,34 @@ class gps(Resource):
     # POST Method
     def post(self):
         # Pars Args
-        args = parser.parse_args()
+        args = parserGPS.parse_args()
         # Extract Data from Args
         lat = args['lat']
         lng = args['lng']
         # Insert Data into Database
         db.execute('INSERT INTO gps (lat, lng) VALUES (?, ?)', (lat, lng))
+
+### Weather API ###
+# Columns: id, time, temp, humidity
+
+# Create Parser
+parserWeather = reqparse.RequestParser()
+# Add Weather Arguments to Parser
+parserWeather.add_argument('time', type=str)
+parserWeather.add_argument('temp', type=float)
+parserWeather.add_argument('humidity', type=float)
+
+# Create Weather API
+class weather(Resource):
+    # GET Method
+    def get(self):
+        # Fetching Data from Database
+        result = db.execute('SELECT * FROM weather')
+        # Returning Data
+        return {'data': [dict(row) for row in result]}
+    # POST Method
+    def post(self):
+        # 
 
 # Adding Resource to API
 api.add_resource(gps, '/gps')
