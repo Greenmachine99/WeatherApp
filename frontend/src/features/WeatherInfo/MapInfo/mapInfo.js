@@ -28,6 +28,8 @@ const positionIcon = new Icon({
     iconSize: [40, 40]
 })
 
+console.log(storedLocations);
+
 // Load Current Location
 useEffect(() => {
     dispatch(getUserPosition());
@@ -37,9 +39,6 @@ useEffect(() => {
 
     return (
         <div className="map-container">
-            <div className="map-header">
-                {storedLocations.length}
-            </div>
         {isLoading ? (
             <p> Loading current location... </p>
         ) : (!hasError ? (
@@ -51,7 +50,15 @@ useEffect(() => {
                 <Popup>
                     You are here!
                 </Popup>
-            </Marker>               
+            </Marker>
+            {storedLocations.map((location) => (
+                <Marker position = {[location.lat, location.lon]} icon = {positionIcon}>
+                    <Popup>
+                        {location.name}
+                    </Popup>
+                </Marker>
+            )
+            )}               
         </MapContainer>
         ) :
         <p> Cannot load current location </p>

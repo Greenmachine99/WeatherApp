@@ -55,7 +55,8 @@ const options = {
         },
         [getStoredLocations.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.storedLocations = action.payload;
+            console.log(action.payload);
+            state.storedLocations = action.payload.data;
         },
         [getStoredLocations.rejected]: (state, action) => {
             state.isLoading = false;
