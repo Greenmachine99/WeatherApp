@@ -7,7 +7,7 @@ import { Icon } from "leaflet";
 import 'leaflet/dist/leaflet.css';
 
 // Import Slice Dependencies
-import { getUserPosition, startPositionSelector} from "./mapInfoSlice";
+import { getUserPosition, startPositionSelector, getStoredLocations, storedLocationsSelector} from "./mapInfoSlice";
 
 // Import CSS Module
 import './mapInfo.css';
@@ -18,6 +18,7 @@ const dispatch = useDispatch();
 
 // Assign Redux State to Variables
 const startPosition = useSelector(startPositionSelector);
+const storedLocations = useSelector(storedLocationsSelector);
 const hasError = useSelector((state) => state.map.hasError);
 const isLoading = useSelector((state) => state.map.isLoading);
 
@@ -30,11 +31,15 @@ const positionIcon = new Icon({
 // Load Current Location
 useEffect(() => {
     dispatch(getUserPosition());
+    dispatch(getStoredLocations());
 },
 [dispatch])
 
     return (
         <div className="map-container">
+            <div className="map-header">
+                {storedLocations.length}
+            </div>
         {isLoading ? (
             <p> Loading current location... </p>
         ) : (!hasError ? (
@@ -52,5 +57,6 @@ useEffect(() => {
         <p> Cannot load current location </p>
         )}
     </div>
+    
     )
 }

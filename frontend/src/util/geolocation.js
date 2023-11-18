@@ -15,3 +15,10 @@ export const loadUserPosition = async () => {
       return new Error("Geolocation is not supported by this browser.");
     }
   };
+
+  // Function to Retrieve GPS from API
+  export const loadSavedLocations = async () => {
+    const response = await fetch('http://localhost:5000/gps');
+    const data = await response.json();
+    return data;
+  }

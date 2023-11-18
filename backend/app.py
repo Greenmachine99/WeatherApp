@@ -1,12 +1,8 @@
 # Importing all Libraries
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
-from sqlalchemy import create_engine, Integer, Column, String
+from sqlalchemy import create_engine
 import os 
-from dotenv import load_dotenv
-
-# Loading Environment Variables
-load_dotenv()
 
 # Creating Flask App
 app = Flask(__name__)
@@ -64,10 +60,18 @@ class weather(Resource):
         return {'data': [dict(row) for row in result]}
     # POST Method
     def post(self):
-        # 
+        # Parse Args
+        args = parserWeather.parse_args()
+        # Extract Data from Args
+        time = args['time']
+        temp = args['temp']
+        humidity = args['humidity']
+        # Insert Data into Database
+        db.execute('INSERT INTO weather (time, temp, humidity) VALUES (?, ?, ?)', (time, temp, humidity))
 
 # Adding Resource to API
 api.add_resource(gps, '/gps')
+api.add_resource(weather, '/weather')
 
 # Running Flask App
 if __name__ == '__main__':

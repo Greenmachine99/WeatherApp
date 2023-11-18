@@ -2,12 +2,12 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 // Import Backend API Dependencies
-import { loadUserPosition } from '../../../util/geolocation';
+import { loadUserPosition, loadSavedLocations } from '../../../util/geolocation';
 
 // Build Initial State
 const initialState = {
     startPosition: [52.377, 4.896],
-    endDestination: [],
+    storedLocations: [],
     isLoading: false,
     hasError: false
 }
@@ -20,13 +20,20 @@ export const getUserPosition = createAsyncThunk(
       return position;
     }
   );
+
+  export const getStoredLocations = createAsyncThunk(
+    'map/loadSavedLocations',
+    async (arg, thunkAPI) => {
+        const locations = await loadSavedLocations();
+        return locations;
+    }
+  )
   
 // Build Slice
 const options = {
     name: 'map',
     initialState,
     reducers: {
-        
     },
     extraReducers: {
         [getUserPosition.pending]: (state, action) => {
@@ -41,6 +48,18 @@ const options = {
         [getUserPosition.rejected]: (state, action) => {
             state.isLoading = false;
             state.hasError = true;
+        },
+        [getStoredLocations.pending]: (state, action) => {
+            state.isLoading = true;
+            state.hasError = false;
+        },
+        [getStoredLocations.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.storedLocations = action.payload;
+        },
+        [getStoredLocations.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.hasError = true;
         }
     }
 }
@@ -50,7 +69,7 @@ const MapInfoSlice = createSlice(options);
 
 // Export Selectors
 export const startPositionSelector = (state) => state.map.startPosition;
-export const endDestinationSelector = (state) => state.map.endDestination;
+export const storedLocationsSelector = (state) => state.map.storedLocations;
 
 // Export Reducer
 export default MapInfoSlice.reducer;
