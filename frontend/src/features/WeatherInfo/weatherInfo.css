@@ -9,6 +9,9 @@
 .header{
     height: 50px;
     margin: 2px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .header > h1 {
     text-align: left;

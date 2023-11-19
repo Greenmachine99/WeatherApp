@@ -7,6 +7,7 @@ import { TempInfo } from './TempInfo/tempInfo.js';
 import { HumInfo } from './HumInfo/humInfo.js';
 import { RainInfo } from './RainInfo/rainInfo.js';
 import { MapInfo } from './MapInfo/mapInfo.js';
+import { SaveLocation } from './SaveLocation/saveLocation.js';
 
 // Import Slice Dependencies
 
@@ -19,6 +20,7 @@ export function WeatherInfo() {
         <div className = 'weather-window'>
             <div className = 'header'>
                 <h1> Weather Information </h1>
+                <SaveLocation />
             </div>
             <div className = 'weather-info'>
                 <div className = 'big-container'>

@@ -22,13 +22,17 @@ const storedLocations = useSelector(storedLocationsSelector);
 const hasError = useSelector((state) => state.map.hasError);
 const isLoading = useSelector((state) => state.map.isLoading);
 
-// Set Icon for Marker
+// Set Icon for Position Marker
 const positionIcon = new Icon({
     iconUrl: "https://img.icons8.com/emoji/48/000000/round-pushpin-emoji.png",
     iconSize: [40, 40]
 })
+// Set Icon for Saved Locations
+const locationIcon = new Icon({
+    iconUrl: 'locationIcon.png',
+    iconSize: [40, 40]
+})
 
-console.log(storedLocations);
 
 // Load Current Location
 useEffect(() => {
@@ -52,7 +56,7 @@ useEffect(() => {
                 </Popup>
             </Marker>
             {storedLocations.map((location) => (
-                <Marker position = {[location.lat, location.lon]} icon = {positionIcon}>
+                <Marker position = {[location.lat, location.lon]} icon = {locationIcon}>
                     <Popup>
                         {location.name}
                     </Popup>

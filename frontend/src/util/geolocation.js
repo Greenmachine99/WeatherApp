@@ -22,9 +22,32 @@ export const loadSavedLocations = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      // Add any additional headers if needed
     },
   });
   const data = await response.json();
   return data;
 };
+
+// Function to Save Geolocation to API
+export const saveLocation = (name, lat, lon) => {
+  fetch('http://127.0.0.1:5000/gps', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      lat: parseFloat(lat),
+      lon: parseFloat(lon),
+      name: name,
+    })
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('HTTP Error: ' + response.status)
+      }
+      return response.json()
+    }).then(data => {
+      console.log('Post request successful')
+    }).catch(error => {
+      console.log('Post request failed', error)
+    })
+}

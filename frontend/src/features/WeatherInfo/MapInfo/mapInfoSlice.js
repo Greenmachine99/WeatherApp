@@ -9,7 +9,9 @@ const initialState = {
     startPosition: [52.377, 4.896],
     storedLocations: [],
     isLoading: false,
-    hasError: false
+    hasError: false,
+    isLoadingLocations: false,
+    hasErrorLocations: false
 }
 
 // Build Async Thunks
@@ -50,17 +52,16 @@ const options = {
             state.hasError = true;
         },
         [getStoredLocations.pending]: (state, action) => {
-            state.isLoading = true;
-            state.hasError = false;
+            state.isLoadingLocations = true;
+            state.hasErrorLocations = false;
         },
         [getStoredLocations.fulfilled]: (state, action) => {
-            state.isLoading = false;
-            console.log(action.payload);
+            state.isLoadingLocations = false;
             state.storedLocations = action.payload.data;
         },
         [getStoredLocations.rejected]: (state, action) => {
-            state.isLoading = false;
-            state.hasError = true;
+            state.isLoadingLocations = false;
+            state.hasErrorLocations = true;
         }
     }
 }
@@ -70,6 +71,7 @@ const MapInfoSlice = createSlice(options);
 
 // Export Selectors
 export const startPositionSelector = (state) => state.map.startPosition;
+export const nameLocationSelector = (state) => state.map.nameLocation;
 export const storedLocationsSelector = (state) => state.map.storedLocations;
 
 // Export Reducer

@@ -2,9 +2,8 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api, Resource, reqparse
-from sqlalchemy import create_engine, select, Table, MetaData
+from sqlalchemy import create_engine, select, insert, Table, MetaData
 import os 
-from decimal import Decimal
 from dotenv import load_dotenv
 
 # Loading Environment Variables
@@ -43,7 +42,7 @@ class GPSResource(Resource):
         with db.connect() as conn:
             result = conn.execute(select(gps))
         # Converting Data to JSON
-        data = [{'id': row.id, 'lat': float(row.lat), 'lon': float(row.lon), 'name': row.name} for row in result]
+        data = [{'lat': float(row.lat), 'lon': float(row.lon), 'name': row.name} for row in result]
         # Returning Data
         return {'data': data}
     
@@ -53,11 +52,12 @@ class GPSResource(Resource):
         args = parserGPS.parse_args()
         # Extract Data from Args
         lat = args['lat']
-        lon = args['lng']
+        lon = args['lon']
         name = args['name']
         # Insert Data into Database
         with db.connect() as connection:
-            connection.execute('INSERT INTO gps (lat, lng, name) VALUES (?, ?, ?)', (lat, lon, name))
+            connection.execute(insert(gps).values({'lat': lat, 'lon': lon, 'name': name}))
+            connection.commit()
 
 ### Weather API ###
 # Columns: id, time, temp, humidity
