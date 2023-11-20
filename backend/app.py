@@ -5,6 +5,7 @@ from flask_restful import Api, Resource, reqparse
 from sqlalchemy import create_engine, select, insert, Table, MetaData
 import os 
 from dotenv import load_dotenv
+from datetime import datetime, timedelta 
 
 # Loading Environment Variables
 load_dotenv()
@@ -37,6 +38,7 @@ parserGPS.add_argument('name', type=str)
 
 # Create GPS API
 class GPSResource(Resource):
+    # GET Method
     def get(self):
         # Fetching Data from Database
         with db.connect() as conn:
@@ -61,6 +63,7 @@ class GPSResource(Resource):
 
 ### Weather API ###
 # Columns: id, time, temp, humidity
+weather = Table('weather', metadata, autoload_with=db)
 
 # Create Parser
 parserWeather = reqparse.RequestParser()
@@ -73,11 +76,14 @@ parserWeather.add_argument('humidity', type=float)
 class weather(Resource):
     # GET Method
     def get(self):
+        # Create Query
+        query = select(weather).where(weather.c.time > datetime.utcnow() - timedelta(days=1))
         # Fetching Data from Database
         with db.connect() as connection:
-            result = connection.execute('SELECT * FROM weather')
+            result = connection.execute(query)
         # Returning Data
         return {'data': [dict(row) for row in result]}
+    
     # POST Method
     def post(self):
         # Parse Args
@@ -88,7 +94,8 @@ class weather(Resource):
         humidity = args['humidity']
         # Insert Data into Database
         with db.connect() as connection:
-            connection.execute('INSERT INTO weather (time, temp, humidity) VALUES (?, ?, ?)', (time, temp, humidity))
+            connection.execute(insert(weather).values({'time': time, 'temp': temp, 'humidity': humidity}))
+            connection.commit()
 
 # Adding Resource to API
 api.add_resource(GPSResource, '/gps')

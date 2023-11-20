@@ -1,6 +1,5 @@
 // Import Dependencies
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 
 // Import React Components
 import { TempInfo } from './TempInfo/tempInfo.js';

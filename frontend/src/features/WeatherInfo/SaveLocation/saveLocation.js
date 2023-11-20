@@ -1,6 +1,6 @@
 // Import React & Redux Dependencies
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 // Import Functions & States
 import { saveLocation } from '../../../util/geolocation';
 import { startPositionSelector } from '../MapInfo/mapInfoSlice';
