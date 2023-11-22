@@ -71,6 +71,7 @@ parserWeather = reqparse.RequestParser()
 parserWeather.add_argument('time', type=str)
 parserWeather.add_argument('temp', type=float)
 parserWeather.add_argument('humidity', type=float)
+parserWeather.add_argument('prec', type=float)
 
 # Create Weather API
 class weather(Resource):
@@ -81,8 +82,10 @@ class weather(Resource):
         # Fetching Data from Database
         with db.connect() as connection:
             result = connection.execute(query)
+        # Converting Data to JSON
+        data = [{'time': row.time, 'temp': float(row.temp), 'humidity': float(row.humidity), 'prec': float(row.prec)} for row in result]
         # Returning Data
-        return {'data': [dict(row) for row in result]}
+        return {'data': data}
     
     # POST Method
     def post(self):
@@ -92,9 +95,10 @@ class weather(Resource):
         time = args['time']
         temp = args['temp']
         humidity = args['humidity']
+        prec = args['prec']
         # Insert Data into Database
         with db.connect() as connection:
-            connection.execute(insert(weather).values({'time': time, 'temp': temp, 'humidity': humidity}))
+            connection.execute(insert(weather).values({'time': time, 'temp': temp, 'humidity': humidity, 'prec': prec}))
             connection.commit()
 
 # Adding Resource to API

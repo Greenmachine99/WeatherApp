@@ -28,7 +28,7 @@ const initialState = {
 
 // Create Slice Options
 const options = {
-    name: 'weather',
+    name: 'weatherLive',
     initialState,
     reducers: {
 
@@ -57,17 +57,17 @@ const options = {
 }
 
 // Create Slice
-export const weatherSlice = createSlice(options);
+export const weatherLive = createSlice(options);
 
 // Export Selectors
-export const tempSelector = state => state.weather.temp;
-export const tempFeelslikeSelector = state => state.weather.tempFeelslike;
-export const windSpeedSelector = state => state.weather.windSpeed;
-export const cloudinessSelector = state => state.weather.cloudiness;
-export const rainSelector = state => state.weather.rain;
+export const tempSelector = state => state.weatherLive.temp;
+export const tempFeelslikeSelector = state => state.weatherLive.tempFeelslike;
+export const windSpeedSelector = state => state.weatherLive.windSpeed;
+export const cloudinessSelector = state => state.weatherLive.cloudiness;
+export const rainSelector = state => state.weatherLive.rain;
 
-export const isLoadingSelector = state => state.weather.isLoading;
-export const hasErrorSelector = state => state.weather.hasError;
+export const isLoadingSelector = state => state.weatherLive.isLoading;
+export const hasErrorSelector = state => state.weatherLive.hasError;
 
 // Export Reducer
-export default weatherSlice.reducer;
+export default weatherLive.reducer;
